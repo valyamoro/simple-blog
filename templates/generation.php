@@ -1,8 +1,6 @@
 <?php
 include_once 'dbConnect.php';
 
-//function generation_head_menu()
-//{
     $topics = file($categoryPath, FILE_IGNORE_NEW_LINES);
     foreach ($topics as $q) {
         $topicData = explode('|', $q);
@@ -24,29 +22,7 @@ include_once 'dbConnect.php';
             </nav>
         </header>
     <?php
-//}
 
-//function generation_posts_index() {
-//    $posts = file($articlePath, FILE_IGNORE_NEW_LINES);
-//    foreach ($posts as $q) {
-//        $postsData = explode('|', $q);
-//        $postsData[] = $postsData;
-//
-//        if (!empty($postsData)) {
-//            ?>
-<!--            <div class="card">-->
-<!--                <div class="card-body">-->
-<!--                    <h5 class="card-title" ><a href="post.php?id_article=--><?php //= $postsData[0] ?><!--">--><?php //= $postsData[1] ?><!--</a></h5>-->
-<!--                    <p class="card-text">--><?php //= mb_substr($postsData[2], 0, 158, 'UTF-8') ?><!--</p>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            --><?php
-//
-//        } else {
-//            echo 'Нет статей';
-//        }
-//    }
-//}
 $posts = file($articlePath, FILE_IGNORE_NEW_LINES);
 if (!empty($posts)) {
     foreach ($posts as $q) {
@@ -68,12 +44,7 @@ if (!empty($posts)) {
     echo 'Нет статей';
 
 }
-//function generation_post ($idArticle) {
-//    $posts = file($articlePath, FILE_IGNORE_NEW_LINES);
-//    foreach ($posts as $q) {
-//        $postsData = explode('|', $q);
-//        $postsData[] = $postsData;
-//    }
+
     if (!empty($idArticle)) {
         foreach ($allPostsData as $needPost) {
             if ($needPost[0] === $idArticle) {
@@ -91,9 +62,21 @@ if (!empty($_GET)) {
     <?php
 }
 
+$comment = file($commentPath, FILE_IGNORE_NEW_LINES);
+
+foreach ($comment as $q) {
+    $commentData = explode('|', $q);
+
+    // Проверяем, соответствует ли комментарий выбранной статье (по id_article)
+    if ($commentData[2] == $idArticle) {
+        ?>
+        <div class="comment">
+            <p><b><?= $commentData[1] ?></b></p>
+            <p>Оставлен: <?= substr($commentData[3], 0, 11) ?></p>
+        </div>
+        <hr>
+        <?php
+    }
+}
 
 
-
-
-
-//}
