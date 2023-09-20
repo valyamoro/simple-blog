@@ -55,8 +55,8 @@ if (!empty($posts)) {
             ?>
             <div class="card">
                 <div class="card-body">
-<!--                    <h5 class="card-title" ><a href="generation.php?id_article=--><?php //= $postsData[0] ?><!--">--><?php //= $postsData[1] ?><!--</a></h5>-->
-                    <h5 class="card-title" ><a href="../post.php?id_article="<?= $postsData[0] ?>"><?= $postsData[1] ?></a></h5>
+                    <h5 class="card-title" ><a href="generation.php?id_article=<?= $postsData[0] ?>"><?= $postsData[1] ?></a></h5>
+<!--                    <h5 class="card-title" ><a href="../post.php?id_article="--><?php //= $postsData[0] ?><!--">--><?php //= $postsData[1] ?><!--</a></h5>-->
                     <p class="card-text"><?= mb_substr($postsData[2], 0, 158, 'UTF-8') ?></p>
                 </div>
             </div>
@@ -75,10 +75,25 @@ if (!empty($posts)) {
 //        $postsData[] = $postsData;
 //    }
     if (!empty($idArticle)) {
-        $needPost = array_filter($postsData, function ($q) use ($idArticle) {
-            $post = explode('|', $q);
-            return $post[0] === $idArticle;
-        });
-
+        foreach ($allPostsData as $needPost) {
+            if ($needPost[0] === $idArticle) {
+                $needPostInfo = $needPost;
+            }
+        }
     }
+    ?>
+    <?php
+if (!empty($_GET)) {
+    ?>
+    <h1><?= $needPostInfo[1] ?></h1>
+    <p><?= $needPostInfo[2] ?></p>
+    <p>Дата публикации: <?= substr($needPostInfo[4], 0, 11) ?></p>
+    <?php
+}
+
+
+
+
+
+
 //}
