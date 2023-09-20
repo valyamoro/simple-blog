@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 include_once 'dbConnect.php';
 
     $topics = file($categoryPath, FILE_IGNORE_NEW_LINES);
@@ -15,7 +16,7 @@ include_once 'dbConnect.php';
                     // Создаём список категорий в меню
                     foreach($topicsData as $topic) {
                         // Выводим элемент списка
-                        echo '<li class="nav-item"><a class="nav-link" href="./topic.php?id_topic='. $topic[0] .'">'.$topic[1].'</a></li>';
+                        echo '<li class="nav-item"><a class="nav-link" href="generation.php?id_topic='. $topic[0] .'">'.$topic[1].'</a></li>';
                     }
                     ?>
                 </ul>
@@ -28,6 +29,7 @@ if (!empty($posts)) {
     foreach ($posts as $q) {
         $postsData = explode('|', $q);
         $allPostsData[] = $postsData;
+        if ($_GET['id_topic'] === $postsData[3]) {
             ?>
             <div class="card">
                 <div class="card-body">
@@ -40,6 +42,7 @@ if (!empty($posts)) {
 
         }
         $idArticle = $_GET['id_article'];
+    }
 } else {
     echo 'Нет статей';
 
