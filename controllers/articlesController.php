@@ -1,36 +1,37 @@
 <?php
 
 function articles_index() {
-    $text = file_get_contents('db.txt');
+    $articleData = file('storage/article.txt');
 
-    $items = explode('-*-', $text);
-
-    $category = 'популярное';
+    $category = 'популярные';
     if (isset($_GET['catg'])) {
         $category = $_GET['catg'];
     }
 
     $result = [];
-    foreach ($items as $item) {
-        $article = explode('|', $item);
+    foreach ($articleData as $q) {
+        $article = explode('|', $q);
 
-        if ($category === 'Популярные' || $article['1'] === $category) {
-            $result = [
+        if ($category === 'популярные' || $article['1'] === $category) {
+            $articleInfo[] = [
                 'id' => $article['0'],
                 'category' => $article['1'],
-                'text' => $article['2']
+                'name' => $article['2'],
+                'text' => $article['3'],
+
             ];
         }
     }
-    return ['articles' => $result, 'category' => $category];
+
+    return ['articles' => $articleInfo, 'category' => $category];
 }
 
 function articles_view() {
     $id = $_GET['id'];
-    $text = file_get_contents('db.txt');
-    $items = explode('-*-', $text);
-    $result = NULL;
 
+    $items = file('storage/article.txt');
+
+    $result = NULL;
     foreach ($items as $item) {
         $article = explode('|', $item);
 
@@ -38,9 +39,26 @@ function articles_view() {
             $result = [
                 'id' => $article['0'],
                 'category' => $article['1'],
-                'text' => $article['2'],
+                'name' => $article['2'],
+                'text' => $article['3'],
             ];
         }
     }
-    return ['article' => $result];
+    $commentData = file('storage/comment.txt');
+
+    foreach ($commentData as $item) {
+        $comment = explode('|', $item);
+
+        if ($comment[1] == $_GET['id']) {
+            $commentInfo = [
+                'id' => $comment['0'],
+                'idArticle' => $comment['1'],
+                'username' => $comment['2'],
+                'text' => $comment['3'],
+
+            ];
+        }
+
+    }
+    return ['article' => $result, 'comments' => $commentInfo];
 }

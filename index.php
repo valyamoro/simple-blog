@@ -26,3 +26,4 @@ if (file_exists($controllerPath)) {
         render($controller, $action, $data);
     }
 }
+
