@@ -1,2 +1,0 @@
-1|animals
-2|humans
