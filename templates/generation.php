@@ -1,12 +1,14 @@
 <?php
 error_reporting(0);
 include_once 'dbConnect.php';
+include_once 'debug_function.php';
 
     $topics = file($categoryPath, FILE_IGNORE_NEW_LINES);
     foreach ($topics as $q) {
         $topicData = explode('|', $q);
         $topicsData[] = $topicData;
     }
+
     ?>
         <header>
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -22,13 +24,16 @@ include_once 'dbConnect.php';
                 </ul>
             </nav>
         </header>
-    <?php
+<?php
+
+
 
 $posts = file($articlePath, FILE_IGNORE_NEW_LINES);
 if (!empty($posts)) {
     foreach ($posts as $q) {
         $postsData = explode('|', $q);
         $allPostsData[] = $postsData;
+
         if ($_GET['id_topic'] === $postsData[3]) {
             ?>
             <div class="card">
@@ -42,19 +47,22 @@ if (!empty($posts)) {
 
         }
         $idArticle = $_GET['id_article'];
+
     }
+
 } else {
     echo 'Нет статей';
 
 }
 
-    if (!empty($idArticle)) {
-        foreach ($allPostsData as $needPost) {
-            if ($needPost[0] === $idArticle) {
-                $needPostInfo = $needPost;
-            }
+if (!empty($idArticle)) {
+    foreach ($allPostsData as $needPost) {
+        if ($needPost[0] === $idArticle) {
+            $needPostInfo = $needPost;
+            det($needPostInfo);
         }
     }
+}
     ?>
     <?php
 if (!empty($_GET)) {
@@ -81,5 +89,6 @@ foreach ($comment as $q) {
         <?php
     }
 }
+
 
 
