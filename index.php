@@ -16,13 +16,11 @@ if (!empty($_GET['a'])) {
 $controllerPath = "controllers/{$controller}Controller.php";
 
 $functionName = $controller . '_' . $action;
-
 if (file_exists($controllerPath)) {
     include_once $controllerPath;
 
     if (function_exists($functionName)) {
         $data = $functionName();
-
         render($controller, $action, $data);
     }
 }

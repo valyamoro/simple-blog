@@ -31,6 +31,7 @@ function articles_view() {
 
     $items = file('storage/article.txt');
 
+
     $result = NULL;
     foreach ($items as $item) {
         $article = explode('|', $item);
@@ -48,9 +49,8 @@ function articles_view() {
 
     foreach ($commentData as $item) {
         $comment = explode('|', $item);
-
         if ($comment[1] == $_GET['id']) {
-            $commentInfo = [
+            $commentInfo[] = [
                 'id' => $comment['0'],
                 'idArticle' => $comment['1'],
                 'username' => $comment['2'],
