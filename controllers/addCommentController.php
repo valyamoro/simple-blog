@@ -5,7 +5,7 @@ function addComment_index() {
     $dataArticle = file('storage/comment.txt', FILE_IGNORE_NEW_LINES);
 
 
-
+    // comment
     $idArticle = $_SESSION['idArticle'];
     $idComment = $dataComments ? (intval(explode('|', end($dataComments))[0]) + 1) : 1;
     $userName = $_POST['user'];
